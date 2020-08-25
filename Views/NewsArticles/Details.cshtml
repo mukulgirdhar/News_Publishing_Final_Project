@@ -1,0 +1,23 @@
+﻿@model News_Publishing_Final_Project.Models.NewsArticle
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+<div>
+    <h3> @Html.DisplayFor(model => model.Headline)</h3>
+    <h6> Published  @Html.DisplayFor(model => model.PublishedTime)</h6>
+
+    <hr />
+    <p>   @Html.DisplayFor(model => model.Content)</p>
+
+
+
+
+
+
+
+</div>
+

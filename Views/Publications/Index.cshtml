@@ -1,0 +1,52 @@
+﻿@model IEnumerable<News_Publishing_Final_Project.Models.Publication>
+
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>World News</h1>
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("reporter"))
+{
+    <p>
+        <a class="btn btn-primary" href="/NewsArticles/Create">New Article</a>
+    </p>
+}
+
+    @foreach (var item in Model)
+    {
+
+        <div class="card border-success mb-3">
+            <div class="card-header">
+                Reported By @Html.DisplayFor(modelItem => item.Reporter.EmailAddress)
+            </div>
+            <div class="card-body">
+                <h3 class="card-title"><u>@Html.DisplayFor(modelItem => item.NewsArticle.Headline)</u></h3>
+                <p class="card-text">Published @Html.DisplayFor(modelItem => item.NewsArticle.PublishedTime)</p>
+
+
+                @if (SignInManager.IsSignedIn(User) && (User.IsInRole("reporter") || User.IsInRole("site_admin")))
+                {
+                    <a class="btn btn-primary" href="/NewsArticles/Edit/@item.NewsArticle.Id">Edit</a>
+                    <a class="btn btn-primary" href="/NewsArticles/Details/@item.NewsArticle.Id">Details</a>
+                    <a class="btn btn-primary" href="/NewsArticles/Delete/@item.NewsArticle.Id">Delete</a>
+                }
+                else
+                {
+
+                    <a href="/NewsArticles/Details/@Html.DisplayFor(modelItem => item.NewsArticle.Id)" class="btn btn-primary">Read More...</a>
+                }
+            </div>
+        </div>
+
+
+
+
+
+
+    }
+
